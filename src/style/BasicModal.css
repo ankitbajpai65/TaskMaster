@@ -1,0 +1,44 @@
+input,
+textarea {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    outline: none;
+}
+
+#title {
+    font-size: 1.2rem;
+}
+
+#description {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* #modal_addBtn {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    margin-top: 1rem;
+} */
+
+/* CARDS */
+.cardDiv {
+    display: flex;
+    /* justify-content: space-around; */
+    flex-wrap: wrap;
+    margin-top: 3rem;
+}
+
+.cards {
+    width: 20rem;
+    margin: 0px 1rem 3rem 2rem;
+    text-align: justify;
+}
+
+/* TODO_CARD */
+
+.deleteIcon:hover {
+    color: rgb(234, 31, 31);
+}

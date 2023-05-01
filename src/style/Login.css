@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-size: 1.6rem; */
+}
+
+.loginSec {
+    height: 91vh;
+}
+
+.loginDiv {
+    /* border: 2px solid red; */
+    height: 91vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #CED4CA;
+}
+
+.loginFormDiv {
+    /* border: 2px solid black; */
+    background: white;
+    height: 70%;
+    width: 26rem;
+    padding: 3rem;
+    border-radius: 2rem;
+    position: relative;
+}
+
+.label {
+    /* margin: 1rem 0rem; */
+    margin-top: 2rem !important;
+}
+
+.loginFormDiv input {
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    background: #CED4CA;
+    border: none;
+    outline: none;
+}
+
+.visibilityIcon {
+    position: absolute;
+    top: 10rem;
+    right: 4rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transform: scale(0.8);
+}
+
+.vIcon {
+    position: absolute;
+    top: 15.6rem;
+    right: 4rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transform: scale(0.8);
+}
+
+.errorMsg {
+    color: red;
+    display: block;
+    margin-top: -1.5rem;
+    margin-bottom: 1rem;
+}
+
+.loginPageBtn {
+    font-size: 1.7rem;
+    padding: 0.7rem;
+    margin-top: 4rem;
+    margin-bottom: 3rem;
+}
+
+.not_has_account {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.not_has_account button {
+    background: white;
+    font-weight: 500;
+}
+
+/* MEDIA QUERY */
+/* @media only screen and (max-width: 600px) {
+    .loginFormDiv {
+        width: 35rem;
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+    .loginFormDiv {
+        width: 38rem;
+    }
+} */

@@ -1,0 +1,16 @@
+.addBtn {
+    background: orange;
+    position: fixed;
+    right: 10rem;
+    bottom: 5rem;
+    border-radius: 50%;
+    padding: 1rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.addIcon {
+    transform: scale(1.3);
+    color: white;
+}
