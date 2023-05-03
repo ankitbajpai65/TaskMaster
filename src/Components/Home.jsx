@@ -7,6 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 import '../style/Add_Todo.css'
 import '../style/BasicModal.css'
 import { auth } from './firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Home = () => {
@@ -28,7 +30,11 @@ const Home = () => {
         //     }
         // })
         if (auth.currentUser == null) {
-            alert(`Please login to add notes`)
+            // alert(`Please login to add notes`)
+            toast.info("Please login to add notes", {
+                position: "top-center",
+                theme: "dark"
+            });
             return;
         }
 
@@ -79,6 +85,7 @@ const Home = () => {
                         }
                     </div>
             }
+            <ToastContainer />
         </>
     )
 }
