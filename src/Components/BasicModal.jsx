@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import '../style/BasicModal.css'
 import Button from '@mui/material/Button';
 import { v4 as uuid } from 'uuid';
-import { set, ref } from 'firebase/database'
+import { auth, db } from './firebase.jsx'
+import { collection, query, where, addDoc, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const style = {
     position: 'absolute',
@@ -19,42 +18,41 @@ const style = {
     p: 4,
 };
 
-export default function BasicModal({ open, handleClose, inputData, setInputData, data, setData, isEditClicked, setIsEditClicked }) {
-
-    // const [inputData, setInputData] = useState({
-    //     id: '',
-    //     title: '',
-    //     desc: ''
-    // })
+export default function BasicModal({ open, handleClose, inputData, setInputData, isEditClicked, setIsEditClicked, getData }) {
 
     const inputEvent = (e) => {
         let name = e.target.name;
         let value = e.target.value;
-        // console.log(name, value);
-        if (!isEditClicked)
-            setInputData({ ...inputData, [name]: value, id: uuid() });
-        else
-            setInputData({ ...inputData, [name]: value });
+        setInputData({ ...inputData, [name]: value });
 
     }
-    const addTodo = () => {
-        console.log(inputData);
-        if (isEditClicked) {
-            setData(prevData => {
-                return prevData.map((data) => {
-                    if (data.id == inputData.id) {
-                        return inputData;
-                    } else {
-                        return data;
-                    }
-                })
-            });
-            setIsEditClicked(false);
+    const addTodo = async (e) => {
+        e.preventDefault();
+
+        if (!isEditClicked) {
+            try {
+                const docRef = await addDoc(collection(db, "users", auth.currentUser.uid, "todos"), inputData);
+                console.log("Document written with ID: ", docRef.id);
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            }
+            handleClose();
+            getData(auth.currentUser.uid)
         }
         else {
-            setData([...data, inputData]);
+            // console.log("update runs", todoId);
+            const todoRef = doc(db, 'users', auth.currentUser.uid, 'todos', inputData.todoId);
+            updateDoc(todoRef, inputData)
+                .then(() => {
+                    console.log('Todo successfully updated');
+                })
+                .catch((error) => {
+                    console.error('Error updating todo: ', error);
+                });
         }
-        handleClose();
+        getData(auth.currentUser.uid);
+        setIsEditClicked(false);
+        handleClose()
     }
     return (
         <div>

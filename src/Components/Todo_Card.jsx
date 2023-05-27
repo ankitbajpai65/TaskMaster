@@ -8,16 +8,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import '../style/BasicModal.css'
 
-export default function Todo_Card({ id, title, desc, deleteTodo, handleOpen, setIsEditClicked, inputData, setInputData, data, setData }) {
-    // console.log(id);
+export default function Todo_Card({ id, title, desc, deleteTodo, handleOpen, setIsEditClicked, setInputData }) {
 
-    const editTodo = (title, desc) => {
-        // console.log(title, desc);
+    const editTodo = (todoId) => {
+        console.log(title, desc);
         handleOpen()
-        setInputData({ id, title, desc });
+        setInputData({ todoId, title, desc });
         setIsEditClicked(true)
     }
-
     return (
         <Card sx={{ minWidth: 275, position: 'relative' }} className="cards">
             <CardContent>
@@ -34,7 +32,7 @@ export default function Todo_Card({ id, title, desc, deleteTodo, handleOpen, set
                 right: '0rem',
                 bottom: '0rem'
             }}>
-                <IconButton aria-label="delete" onClick={() => editTodo(title, desc)}>
+                <IconButton aria-label="delete" onClick={() => editTodo(id)}>
                     <EditIcon />
                 </IconButton>
                 <IconButton aria-label="delete" onClick={() => deleteTodo(id)}>
