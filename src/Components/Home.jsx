@@ -8,7 +8,7 @@ import '../style/BasicModal.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { auth, db } from './firebase.jsx'
-import { getFirestore, collection, query, where, addDoc, getDocs, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { collection, query, where, addDoc, getDocs, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 
 const Home = ({ displayLogoutBtn }) => {
@@ -41,7 +41,7 @@ const Home = ({ displayLogoutBtn }) => {
     // FETCHING TODOS
 
     const getData = async (userId) => {
-        console.log(`getData calls`)
+        // console.log(`getData calls`)
         try {
             const userDocRef = doc(collection(db, 'users'), userId);
             const todosQuery = collection(userDocRef, 'todos');
@@ -59,7 +59,6 @@ const Home = ({ displayLogoutBtn }) => {
     // DELETE TODO
 
     const deleteTodo = async (todoId) => {
-        console.log(todoId)
         const checkToDelete = confirm(`Are you sure want to delete this todo?`)
 
         if (checkToDelete) {

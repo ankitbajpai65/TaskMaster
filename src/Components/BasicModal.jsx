@@ -32,7 +32,7 @@ export default function BasicModal({ open, handleClose, inputData, setInputData,
         if (!isEditClicked) {
             try {
                 const docRef = await addDoc(collection(db, "users", auth.currentUser.uid, "todos"), inputData);
-                console.log("Document written with ID: ", docRef.id);
+                // console.log("Document written with ID: ", docRef.id);
             } catch (error) {
                 console.error("Error adding document: ", error);
             }

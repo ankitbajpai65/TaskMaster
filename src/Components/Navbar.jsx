@@ -90,7 +90,6 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
     };
 
     const handleLogout = () => {
-        console.log('logout');
         signOut(auth).then(() => {
             // alert(`You are successfully logged out!`)
             toast.success("Your have been successfully logged out!", {

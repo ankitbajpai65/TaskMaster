@@ -11,7 +11,6 @@ import '../style/BasicModal.css'
 export default function Todo_Card({ id, title, desc, deleteTodo, handleOpen, setIsEditClicked, setInputData }) {
 
     const editTodo = (todoId) => {
-        console.log(title, desc);
         handleOpen()
         setInputData({ todoId, title, desc });
         setIsEditClicked(true)

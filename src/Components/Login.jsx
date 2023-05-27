@@ -26,7 +26,7 @@ const Login = () => {
     const inputEvent = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        console.log(name, value);
+        // console.log(name, value);con
         setUser({ ...user, [name]: value });
     }
     const handleSubmission = () => {
@@ -38,7 +38,7 @@ const Login = () => {
             });
             return;
         }
-        console.log(user);
+        // console.log(user);
         setSubmitBtnDisable(true);
         signInWithEmailAndPassword(auth, user.email, user.pass).then(
             async (res) => {
