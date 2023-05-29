@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { signOut } from "firebase/auth";
 import { auth } from './firebase'
 import { ToastContainer, toast } from 'react-toastify';
+import { UserContext } from './DataProvider';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -60,12 +61,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
-    const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+    const navigate = useNavigate();
+    const searchRef = useRef();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const [search, setSearch] = useState('')
+    const { todos, setTodos } = useContext(UserContext);
 
     const loginClicked = () => {
         console.log(`Login clcked`);
@@ -89,6 +94,26 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    // FOR SEARCHING THE TODOS
+
+    const handleSearchInput = (e) => {
+        setSearch(e.target.value)
+    }
+
+    const filterTodos = (e) => {
+        if (e.key === 'Enter') {
+            console.log(search);
+            console.log(todos);
+            const filteredItems = todos.filter((val) => {
+                return val.title.toLowerCase().includes(search.toLowerCase())
+            })
+            console.log(filteredItems);
+            setTodos(filteredItems);
+        }
+    }
+
+    // LOGOUT FUNCTION
+
     const handleLogout = () => {
         signOut(auth).then(() => {
             // alert(`You are successfully logged out!`)
@@ -100,6 +125,7 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
             alert(error.message);
         });
     }
+
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             // console.log(user);
@@ -159,7 +185,6 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
                     <AccountCircle />
                 </IconButton> */}
                 <Button variant="outlined">Outlined</Button>
-
                 <p>Profile</p>
             </MenuItem>
         </Menu>
@@ -173,7 +198,7 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
                         justifyContent: "space-between"
                     }}>
                         <Stack direction="row" alignItems="center">
-                            <IconButton
+                            {/* <IconButton
                                 size="large"
                                 edge="start"
                                 color="inherit"
@@ -181,7 +206,7 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
                                 sx={{ mr: 2 }}
                             >
                                 <MenuIcon />
-                            </IconButton>
+                            </IconButton> */}
                             <Typography
                                 variant="h6"
                                 noWrap
@@ -199,7 +224,11 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"
+                                value={search}
                                 inputProps={{ 'aria-label': 'search' }}
+                                onChange={handleSearchInput}
+                                onKeyUp={(e) => filterTodos(e)}
+                                ref={searchRef}
                             />
                         </Search>
                         {/* <Box sx={{ flexGrow: 1 }} /> */}

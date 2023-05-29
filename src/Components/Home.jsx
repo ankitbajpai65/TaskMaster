@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import BasicModal from './BasicModal'
 import Todo_Card from './Todo_Card';
 import Button from '@mui/material/Button';
@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { auth, db } from './firebase.jsx'
 import { collection, query, where, addDoc, getDocs, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { UserContext } from './DataProvider';
 
 
 const Home = ({ displayLogoutBtn }) => {
@@ -18,7 +19,8 @@ const Home = ({ displayLogoutBtn }) => {
         title: '',
         desc: ''
     })
-    const [todos, setTodos] = useState([]);
+    // const [todos, setTodos] = useState([]);
+    const { todos, setTodos } = useContext(UserContext);
     const [isEditClicked, setIsEditClicked] = useState(false)
 
     const handleOpen = () => {
@@ -112,9 +114,6 @@ const Home = ({ displayLogoutBtn }) => {
 
     return (
         <>
-            <button className="addBtn" onClick={handleOpen}>
-                < AddIcon className='addIcon' />
-            </button>
             {
                 !auth.currentUser ?
                     <div style={{
@@ -127,6 +126,9 @@ const Home = ({ displayLogoutBtn }) => {
                     </div>
                     :
                     <>
+                        <button className="addBtn" onClick={handleOpen}>
+                            < AddIcon className='addIcon' />
+                        </button>
                         <BasicModal open={open} handleClose={handleClose} inputData={inputData} setInputData={setInputData} isEditClicked={isEditClicked} setIsEditClicked={setIsEditClicked} getData={getData} updateTodo={updateTodo} />
                         {
                             todos.length == 0 ?
