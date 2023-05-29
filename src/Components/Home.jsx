@@ -3,6 +3,7 @@ import BasicModal from './BasicModal'
 import Todo_Card from './Todo_Card';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import '../style/Home.css'
 import '../style/Add_Todo.css'
 import '../style/BasicModal.css'
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,9 +11,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { auth, db } from './firebase.jsx'
 import { collection, query, where, addDoc, getDocs, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { UserContext } from './DataProvider';
+import { useNavigate } from 'react-router-dom';
+import homeImg from '../assets/login.jpg'
 
 
 const Home = ({ displayLogoutBtn }) => {
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [inputData, setInputData] = useState({
         // id: '',
@@ -22,6 +26,11 @@ const Home = ({ displayLogoutBtn }) => {
     // const [todos, setTodos] = useState([]);
     const { todos, setTodos } = useContext(UserContext);
     const [isEditClicked, setIsEditClicked] = useState(false)
+
+    const redirectToLogin = () => {
+        console.log(`Login clcked`);
+        navigate('/login');
+    }
 
     const handleOpen = () => {
         if (auth.currentUser == null) {
@@ -116,13 +125,19 @@ const Home = ({ displayLogoutBtn }) => {
         <>
             {
                 !auth.currentUser ?
-                    <div style={{
-                        height: '91vh',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                        <h1 style={{ marginBottom: '10rem', fontSize: '3rem' }}>Please Login to add and view todos!</h1>
+                    <div className="homeDiv"
+                        style={{
+                            height: '91vh',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-evenly',
+                        }}>
+                        <img src={homeImg} alt="" />
+                        <div>
+                            <h1 className="message">Please Login to add and view todos!</h1>
+                            <Button variant="contained" onClick={redirectToLogin} className="homeLoginBtn">Login</Button>
+                        </div>
                     </div>
                     :
                     <>

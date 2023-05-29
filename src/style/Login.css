@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* font-size: 1.6rem; */
 }
 
 .loginSec {
@@ -21,7 +20,7 @@
 .loginFormDiv {
     /* border: 2px solid black; */
     background: white;
-    height: 70%;
+    height: 68%;
     width: 26rem;
     padding: 3rem;
     border-radius: 2rem;
@@ -83,17 +82,13 @@
 .not_has_account button {
     background: white;
     font-weight: 500;
+    background: url;
 }
 
 /* MEDIA QUERY */
-/* @media only screen and (max-width: 600px) {
+
+@media only screen and (max-width: 600px) {
     .loginFormDiv {
-        width: 35rem;
+        margin: 10px
     }
 }
-
-@media only screen and (min-width: 600px) and (max-width: 768px) {
-    .loginFormDiv {
-        width: 38rem;
-    }
-} */

@@ -75,6 +75,7 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
     const loginClicked = () => {
         console.log(`Login clcked`);
         navigate('/login');
+        handleMenuClose();
     }
 
     const handleProfileMenuOpen = (event) => {
@@ -116,7 +117,6 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
 
     const handleLogout = () => {
         signOut(auth).then(() => {
-            // alert(`You are successfully logged out!`)
             toast.success("Your have been successfully logged out!", {
                 position: "top-center",
                 theme: "dark"
@@ -128,7 +128,6 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
-            // console.log(user);
             if (user)
                 setDisplayLogoutBtn(true);
             else
@@ -174,20 +173,27 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={handleProfileMenuOpen}>
-                {/* <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton> */}
-                <Button variant="outlined">Outlined</Button>
-                <p>Profile</p>
+            <MenuItem onClick={handleProfileMenuOpen}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                <p
+                    style={{ marginBottom: '1rem' }}
+                    onClick={() => {
+                        navigate('/');
+                        handleMenuClose();
+                    }}>Home
+                </p>
+                {
+                    !displayLogoutBtn ?
+                        <p onClick={loginClicked}>Login</p>
+                        :
+                        <p onClick={handleLogout}>Logout</p>
+
+                }
             </MenuItem>
-        </Menu>
+        </Menu >
     );
 
     return (
@@ -198,15 +204,6 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
                         justifyContent: "space-between"
                     }}>
                         <Stack direction="row" alignItems="center">
-                            {/* <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="open drawer"
-                                sx={{ mr: 2 }}
-                            >
-                                <MenuIcon />
-                            </IconButton> */}
                             <Typography
                                 variant="h6"
                                 noWrap
@@ -231,19 +228,18 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
                                 ref={searchRef}
                             />
                         </Search>
-                        {/* <Box sx={{ flexGrow: 1 }} /> */}
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             {/* <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle sx={{ fontSize: '2rem' }} />
-                        </IconButton> */}
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle sx={{ fontSize: '2rem' }} />
+                            </IconButton> */}
 
                             {
                                 !displayLogoutBtn ?
@@ -270,7 +266,7 @@ export default function Navbar({ displayLogoutBtn, setDisplayLogoutBtn }) {
                     </Toolbar>
                 </AppBar>
                 {renderMobileMenu}
-                {renderMenu}
+                {/* {renderMenu} */}
             </Box>
             <ToastContainer />
         </>
